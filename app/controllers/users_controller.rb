@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
+    @userss = User.where.not(id: current_user.id)
   end
 
   def edit
@@ -19,6 +20,16 @@ class UsersController < ApplicationController
     else
       redirect_to books_path
     end
+  end
+  
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
+  end
+  
+  def follweds
+    user = User.find(params[:id])
+    @users = user.followeds
   end
 
   def update
