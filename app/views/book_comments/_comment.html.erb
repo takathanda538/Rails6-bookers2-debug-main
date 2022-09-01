@@ -1,0 +1,18 @@
+  
+    <div class="col-md-12">
+      <p>コメント件数：<%= book.book_comments.count %></p>
+      <% book.book_comments.each do |book_comment| %>
+      <div class="row">
+        <div class="col-md-2">
+          <%= image_tag book_comment.user.get_profile_image(50,50) %>
+          <%= book_comment.user.name %>
+        </div>
+        <div class= "col-md-10">
+          <%= book_comment.comment %>
+          <% if book_comment.user == current_user %>
+            <%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete, remote: true %>
+          <% end %>
+        </div>
+      </div>
+        <% end %>
+    </div>
