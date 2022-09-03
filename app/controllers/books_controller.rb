@@ -5,11 +5,25 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @book_comment = BookComment.new
+    @see = See.find_by(ip: request.remote_ip)
+    if @see
+      @books = Book.all
+    else
+      @books = Book.all
+      See.create(ip: request.remote_ip)
+    end
   end
 
   def index
     @book = Book.new
-    @books = Book.all
+    @books = Book.includes(:favorite_users).sort {|a,b| b.favorite_users.size <=> a.favorite_users.size}
+    @today_book = Book.created_today
+    @today_book_1 = Book.created_yesterday
+    @today_book_2 = Book.created_yesterday_2
+    @today_book_3 = Book.created_yesterday_3
+    @today_book_4 = Book.created_yesterday_4
+    @today_book_5 = Book.created_yesterday_5
+    @today_book_6 = Book.created_yesterday_6
   end
 
   def create

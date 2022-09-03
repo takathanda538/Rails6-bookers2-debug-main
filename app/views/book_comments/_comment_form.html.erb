@@ -1,5 +1,5 @@
     <div class="col-md-12">
-      <%= form_with model: [@book, @book_comment] ,local: false do |f| %>
+      <%= form_with model: [book, book_comment] ,local: false do |f| %>
         <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに",class: "form-control" %><br>
         <%= f.submit "送信する" %>
       <% end %>
