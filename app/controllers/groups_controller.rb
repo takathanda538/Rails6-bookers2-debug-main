@@ -1,10 +1,14 @@
 class GroupsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
+  
   def new
     @group = Group.new
   end
   
   def create
     @group = Group.new(group_params)
+    @group.users << current_user
     @group.owner_id = current_user.id
     if @group.save
       redirect_to groups_path
@@ -15,6 +19,12 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.all
+  end
+  
+  def join #追記！
+    @group = Group.find(params[:group_id])
+    @group.users << current_user
+    redirect_to  groups_path
   end
 
   def show
@@ -32,6 +42,13 @@ class GroupsController < ApplicationController
     else
       render "edit"
     end
+  end
+  
+  def destroy
+    @group = Group.find(params[:id])
+#current_userは、@group.usersから消されるという記述。
+    @group.users.delete(current_user)
+    redirect_to groups_path
   end
   
   private

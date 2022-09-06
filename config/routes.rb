@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   
-  resources :groups, except: [:destroy]
+  resources :groups do     #ここ！
+    get "join" => "groups#join"
+  end
   
   resources :users, only: [:index,:show,:edit,:update] do
     resource :relationships, only: [:create, :destroy]
