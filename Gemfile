@@ -58,3 +58,5 @@ gem 'net-smtp'
 gem 'jquery-rails'
 gem "chartkick"
 gem "groupdate"
+gem "refile", require: "refile/rails", github: 'manfe/refile'
+gem "refile-mini_magick"
